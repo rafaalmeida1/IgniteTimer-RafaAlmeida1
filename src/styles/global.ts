@@ -18,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
             'gray-900'
           ]}; // como tem ífen, preciso utilizar a sintaxe de [para as cores]
         color: ${(props) => props.theme['gray-300']};
+        -webkit-font-smoothing: antialiased;
     }
 
     body, input, textarea, button {

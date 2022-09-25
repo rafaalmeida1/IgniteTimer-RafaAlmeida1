@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
@@ -23,7 +24,16 @@ const newCycleFormValidationSchema = zod.object({
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
+interface Cycle {
+  id: string;
+  task: string;
+  minutesAmount: number;
+}
+
 export const Home = () => {
+  const [cycles, setCycles] = useState<Cycle[]>([]);
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null) // deixar ele como nulo, significa, que ele pode ser nulo no inicio, então devemos deixar como string ou null
+
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
@@ -33,9 +43,23 @@ export const Home = () => {
   })
 
   function handleCreateNewCycle(data: NewCycleFormData){
-    console.log(data)
-    reset()
+    const id = String(new Date().getTime());
+
+    const newCycle: Cycle = {
+      id, // vai pegar a data atual por milisegundo, e é impossivel criar um id repetitdo
+      task: data.task,
+      minutesAmount: data.minutesAmount
+    }
+
+    setCycles(state => [...state, newCycle]) // oque eu fiz aqui é para usar função, para sempre que a alteração do estado, depender do valor anterior, nós utilizamos uma arrowFunction com o state, passando ele antes de passar a nova informação
+    setActiveCycleId(id)
+    
+    reset();
   }
+
+  const activeCycle = cycles.find(cycle => cycle.id === activeCycleId); // ela vai encontrar qual o id do cicle, que é igual ao id do ciclo ativo.
+
+  console.log(activeCycle);
 
   const task = watch('task');
   const isSubmitDisabled = !task;

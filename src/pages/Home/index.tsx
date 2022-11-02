@@ -1,21 +1,21 @@
 /* eslint-disable prettier/prettier */
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 
-import { Play } from 'phosphor-react'
+import { Play } from 'phosphor-react';
 
-import { 
-    CountDownContainer,
-    FormContainer, 
-    HomeContainer, 
-    MinutesAmountInput, 
-    Separator, 
-    StartCountdownButton, 
-    TaskInput 
-} from './style'
+import {
+  CountDownContainer,
+  FormContainer,
+  HomeContainer,
+  MinutesAmountInput,
+  Separator,
+  StartCountdownButton,
+  TaskInput
+} from './style';
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
@@ -43,10 +43,10 @@ export const Home = () => {
   })
 
   function handleCreateNewCycle(data: NewCycleFormData){
-    const id = String(new Date().getTime());
+    const id = String(new Date().getTime()); // vai pegar a data atual por milisegundo, e é impossivel criar um id repetitdo
 
     const newCycle: Cycle = {
-      id, // vai pegar a data atual por milisegundo, e é impossivel criar um id repetitdo
+      id, 
       task: data.task,
       minutesAmount: data.minutesAmount
     }
@@ -80,7 +80,7 @@ export const Home = () => {
             <option value="Projeto 1" />
             <option value="Projeto 2" />
             <option value="Projeto 3" />
-            <option value="Banana" />
+            <option value="Projeto 4" />
           </datalist>
 
           <label htmlFor="minutesAmount">durante</label>

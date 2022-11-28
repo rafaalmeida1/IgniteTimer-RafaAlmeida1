@@ -12,7 +12,7 @@ import { NewCycleForm } from "./components/NewCycleForm";
 import {
   HomeContainer,
   StartCountdownButton,
-  StopCountdownButton
+  StopCountdownButton,
 } from "./style";
 
 const newCycleFormValidationSchema = zod.object({
@@ -23,9 +23,9 @@ const newCycleFormValidationSchema = zod.object({
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 
 export const Home = () => {
-  const { createNewCycle, interruptCurrentCycle, activeCycle } = useContext(CyclesContext)
+  const { createNewCycle, interruptCurrentCycle, activeCycle } =
+    useContext(CyclesContext);
 
-  
   const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
@@ -35,7 +35,6 @@ export const Home = () => {
   });
 
   const { handleSubmit, watch, reset } = newCycleForm;
-  
   function handleCreateNewCycle(data: NewCycleFormData) {
     createNewCycle(data);
 
